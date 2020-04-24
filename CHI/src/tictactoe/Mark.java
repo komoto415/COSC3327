@@ -1,5 +1,5 @@
 package tictactoe;
 
 public enum Mark {
-    X,O;
+    X, O;
 }
