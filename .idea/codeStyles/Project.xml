@@ -2,6 +2,7 @@
   <code_scheme name="Project" version="173">
     <codeStyleSettings language="JAVA">
       <option name="KEEP_LINE_BREAKS" value="false" />
+      <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
       <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
       <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
       <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true" />
@@ -17,7 +18,6 @@
       <option name="FOR_STATEMENT_WRAP" value="5" />
       <option name="ARRAY_INITIALIZER_WRAP" value="1" />
       <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true" />
-      <option name="ASSIGNMENT_WRAP" value="1" />
       <option name="ASSERT_STATEMENT_WRAP" value="1" />
       <option name="IF_BRACE_FORCE" value="3" />
       <option name="DOWHILE_BRACE_FORCE" value="3" />
