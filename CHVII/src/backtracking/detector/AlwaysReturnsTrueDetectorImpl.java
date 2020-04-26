@@ -3,13 +3,13 @@ package backtracking.detector;
 import sequence.Sequence;
 
 public enum AlwaysReturnsTrueDetectorImpl implements Detector {
-	SINGLETON;
+    SINGLETON;
 
-	public Detector getIsDetectedPrecondition() {
-		return SINGLETON;
-	}
+    public Detector getIsDetectedPrecondition() {
+        return SINGLETON;
+    }
 
-	public boolean isDetected(Sequence<Integer> sequence) {
-		return true;
-	}
+    public boolean isDetected(Sequence<Integer> sequence) {
+        return true;
+    }
 }
