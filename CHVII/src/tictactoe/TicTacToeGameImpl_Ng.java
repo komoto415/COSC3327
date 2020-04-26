@@ -86,6 +86,9 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
         movesArray = new int[CELL_COUNT];
         for (int i = 0; i < CELL_COUNT; i++) {
             movesArray[i] = NO_MOVE;
+            if (i < gridPositionSequence.size()) {
+                movesArray[i] = gridPositionSequence.getElement(i);
+            }
         }
     }
 
