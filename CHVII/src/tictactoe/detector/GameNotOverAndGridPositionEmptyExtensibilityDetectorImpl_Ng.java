@@ -1,27 +1,34 @@
 package tictactoe.detector;
 
+import backtracking.detector.AlwaysReturnsTrueDetectorImpl;
+import backtracking.detector.AlwaysReturnsTrueExtensibilityDetectorImpl;
 import backtracking.detector.Detector;
 import backtracking.detector.ExtensibilityDetector;
 import sequence.Sequence;
+import sequence.SequenceUtils;
+import tictactoe.TicTacToeGame;
+import tictactoe.TicTacToeGameImpl_Ng;
 
 public enum GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Ng implements ExtensibilityDetector {
     SINGLETON;
 
     public Detector getCanExtendPrecondition() {
-        throw new RuntimeException("NOT IMPLEMENTED!");
+        return AlwaysReturnsTrueDetectorImpl.SINGLETON;
     }
 
     public Detector getCanExtendPostcondition() {
-        throw new RuntimeException("NOT IMPLEMENTED!");
+        return AlwaysReturnsTrueDetectorImpl.SINGLETON;
     }
 
     public boolean canExtend(Sequence<Integer> sequence, int i) {
-        throw new RuntimeException("NOT IMPLEMENTED!");
+        TicTacToeGame game = new TicTacToeGameImpl_Ng(sequence);
 
-        //		boolean canExtend = student needs to fill in the details;
-        //
-        //		assert !canExtend || (getCanExtendPostcondition().isDetected(SequenceUtils.shallowCopyOfExtended(sequence, i)));
-        //
-        //		return canExtend;
+        boolean gameNotOver = !game.isGameOver();
+        boolean gridPositionIsEmpty = !SequenceUtils.asList(sequence).contains(i);
+        boolean canExtend = gameNotOver && gridPositionIsEmpty;
+
+        assert !canExtend || (getCanExtendPostcondition().isDetected(SequenceUtils.shallowCopyOfExtended(sequence, i)));
+
+        return canExtend;
     }
 }
