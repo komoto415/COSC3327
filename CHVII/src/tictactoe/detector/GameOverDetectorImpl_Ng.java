@@ -3,7 +3,7 @@ package tictactoe.detector;
 import backtracking.detector.Detector;
 import sequence.Sequence;
 
-public enum XWinsBoardFullDetectorImpl_Skeleton implements Detector {
+public enum GameOverDetectorImpl_Ng implements Detector {
     SINGLETON;
 
     public Detector getIsDetectedPrecondition() {
@@ -12,8 +12,7 @@ public enum XWinsBoardFullDetectorImpl_Skeleton implements Detector {
 
     public boolean isDetected(Sequence<Integer> sequence) {
         assert getIsDetectedPrecondition().isDetected(sequence) :
-                String.format("tictactoeSequence is not viable!: tictactoeSequence = %s", sequence);
-
+                String.format("sequence fails precondition!: sequence = %s", sequence);
         throw new RuntimeException("NOT IMPLEMENTED!");
     }
 }

@@ -14,16 +14,16 @@ import backtracking.detector.ExtensibilityDetector;
 import sequence.Sequence;
 import sequence.SequenceImpl;
 import tictactoe.TicTacToeGame;
-import tictactoe.detector.GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Skeleton;
-import tictactoe.detector.GameOverDetectorImpl_Skeleton;
+import tictactoe.detector.GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Ng;
+import tictactoe.detector.GameOverDetectorImpl_Ng;
 
 public class TicTacToeGameTestsSubsetForStudents_3_INTERMEDIATE extends TicTacToeGameTestsSubsetForStudents_2_BASIC {
     protected static ExtensibilityDetector getGameNotOverAndGridPositionEmptyDetector() {
-        return GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Skeleton.SINGLETON;
+        return GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Ng.SINGLETON;
     }
 
     protected static Detector getGameOverDetector() {
-        return GameOverDetectorImpl_Skeleton.SINGLETON;
+        return GameOverDetectorImpl_Ng.SINGLETON;
     }
 
     @Points(value = 5)

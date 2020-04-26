@@ -4,7 +4,7 @@ import backtracking.detector.Detector;
 import backtracking.detector.ExtensibilityDetector;
 import sequence.Sequence;
 
-public enum GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Skeleton implements ExtensibilityDetector {
+public enum GameNotOverAndGridPositionEmptyExtensibilityDetectorImpl_Ng implements ExtensibilityDetector {
     SINGLETON;
 
     public Detector getCanExtendPrecondition() {

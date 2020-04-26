@@ -2,9 +2,14 @@ package tictactoe.detector;
 
 import backtracking.detector.Detector;
 import sequence.Sequence;
+import tictactoe.Player;
 
-public enum NoDuplicatesAndAllElementsAreGridPositionsDetectorImpl_Skeleton implements Detector {
-    SINGLETON;
+public class WinnerDetectorImpl_Ng implements Detector {
+    private Player desiredWinner;
+
+    public WinnerDetectorImpl_Ng(Player desiredWinner) {
+        this.desiredWinner = desiredWinner;
+    }
 
     public Detector getIsDetectedPrecondition() {
         throw new RuntimeException("NOT IMPLEMENTED!");
@@ -12,7 +17,7 @@ public enum NoDuplicatesAndAllElementsAreGridPositionsDetectorImpl_Skeleton impl
 
     public boolean isDetected(Sequence<Integer> sequence) {
         assert getIsDetectedPrecondition().isDetected(sequence) :
-                String.format("sequence fails precondition!: sequence = %s", sequence);
+                String.format("tictactoeSequence is not viable!: tictactoeSequence = %s", sequence);
 
         throw new RuntimeException("NOT IMPLEMENTED!");
     }

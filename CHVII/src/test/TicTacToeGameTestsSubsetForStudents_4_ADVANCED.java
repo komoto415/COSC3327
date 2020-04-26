@@ -15,12 +15,12 @@ import sequence.Sequence;
 import sequence.SequenceImpl;
 import tictactoe.Player;
 import tictactoe.TicTacToeGame;
-import tictactoe.detector.WinnerDetectorImpl_Skeleton;
-import tictactoe.detector.XWinsBoardFullDetectorImpl_Skeleton;
+import tictactoe.detector.WinnerDetectorImpl_Ng;
+import tictactoe.detector.XWinsBoardFullDetectorImpl_Ng;
 
 public class TicTacToeGameTestsSubsetForStudents_4_ADVANCED extends TicTacToeGameTestsSubsetForStudents_3_INTERMEDIATE {
     protected static Detector getWinnerDetector(Player desiredWinner) {
-        return new WinnerDetectorImpl_Skeleton(desiredWinner);
+        return new WinnerDetectorImpl_Ng(desiredWinner);
     }
 
     @Points(value = 5)
@@ -234,7 +234,7 @@ public class TicTacToeGameTestsSubsetForStudents_4_ADVANCED extends TicTacToeGam
     @Test(timeout = 10000)
     public void allTicTacToeGamesXWinsBoardFull() {
         ExtensibilityDetector extensibility = getGameNotOverAndGridPositionEmptyDetector();
-        Detector solution = XWinsBoardFullDetectorImpl_Skeleton.SINGLETON;
+        Detector solution = XWinsBoardFullDetectorImpl_Ng.SINGLETON;
 
         assert extensibility.getCanExtendPrecondition() == extensibility.getCanExtendPostcondition() :
                 "Extensibility Pre != Post!";
