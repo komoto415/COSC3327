@@ -78,11 +78,6 @@ public class TicTacToeGameImplTest {
         board.setMark(1, Integer.MAX_VALUE);
     }
 
-    @Test
-    public void test() {
-
-    }
-
     @Test(expected = AssertionError.class)
     public void occupancySequential() {
         testName = Thread.currentThread().getStackTrace()[1].getMethodName();
