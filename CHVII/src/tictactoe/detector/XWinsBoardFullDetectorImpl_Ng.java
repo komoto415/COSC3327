@@ -20,7 +20,12 @@ public enum XWinsBoardFullDetectorImpl_Ng implements Detector {
 
         TicTacToeGame game = new TicTacToeGameImpl_Ng(sequence);
         boolean isBoardFull = sequence.size() == 9;
-        boolean xIsWinner = game.getWinner() == Player.X;
+        boolean xIsWinner = false;
+        try {
+            Player winner = game.getWinner();
+            xIsWinner = winner == Player.X;
+        } catch (AssertionError ignored) {
+        }
 
         return isBoardFull && xIsWinner;
     }

@@ -76,6 +76,12 @@ public class TicTacToeGameTestsSubsetForStudents_3_INTERMEDIATE extends TicTacTo
         sequence.extend(6);
         sequence.extend(3);
 
+        /*
+        X1|O1|X2
+        O4|  |O2
+        x4|O3|X3
+        */
+
         ExtensibilityDetector extensibilityDetector = getGameNotOverAndGridPositionEmptyDetector();
 
         assertTrue(extensibilityDetector.canExtend(sequence, 4));

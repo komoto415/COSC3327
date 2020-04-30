@@ -127,9 +127,10 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             Time:	O(n)
             Space:	O(n)
 
-            TODO: Updated desc below to new algo
             Our primary currency exchange will always be some direction of row, col => direct index. Knowing this,
-            all we need to do is find what that direct index, and look for it in movesArray
+            all we need to do is find what that direct index, and look for it in movesArray. With that, we have a
+            static array of the order that the marks must be played which is one to one with the characteristic of
+            movesArray where its indexes are implicit of the turns of the tic tac toe state.
     */
     private static final Mark[] indexToMark = new Mark[]{Mark.X1, Mark.O1, Mark.X2, Mark.O2, Mark.X3, Mark.O3, Mark.X4,
             Mark.O4, Mark.X5,
@@ -250,16 +251,16 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             Space:	O(n)
 
             Consider null just the base case, and we will try to 'prove me otherwise', potentially also refered to as
-             immediate escape conditions, that it is in fact not null, there by avoiding silly one line else
-             statements that just assigns the return value. The 'prove me otherwise' case for this method is that we
-             start with the assumption that the game is in fact already over and we will have to prove that is isn't
-             first.
+            immediate escape conditions, that it is in fact not null, there by avoiding silly one line else
+            statements that just assigns the return value. The 'prove me otherwise' case for this method is that we
+            start with the assumption that the game is in fact already over and we will have to prove that is isn't
+            first.
 
             We want to determine how many turns have gone by because whether that is even or odd will determine for
             us whose turn it is. We can find the number of turns played simply by making a set of all the elements in
-             movesArray, excluding -1, and getting the set's size. If the result is even, is must be X's turn as each
-              player has played the same number of turns AND X always starts, so we come full circle. And then the
-              only other possible option at this point is for it to be O
+            movesArray, excluding -1, and getting the set's size. If the result is even, is must be X's turn as each
+            player has played the same number of turns AND X always starts, so we come full circle. And then the
+            only other possible option at this point is for it to be O
     */
     public Player getTurn() {
         assert movesArrayIsWellFormed();
@@ -326,13 +327,13 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             of them having to do with how many turns have been played. The order of it being done in in this
             implementation is purly for compactness. The first easy check made is whether or not
             ROW_COUNT*COLUMN_COUNT numbers of turns, 9 for a 3x3 board, have been played as it is the maximum ammount
-             possible to be played. If the check turns out true, we can immediately set true and not check any of the
-              other case.
+            possible to be played. If the check turns out true, we can immediately set true and not check any of the
+            other case.
 
             The second one is asking whether there as been (ROW_COUNT+COLUMN_COUNT - 1) number of turns played; 5 for
-             a 3x3 board. This is because there are a certain amount of turns that MUST be played before a winner is
-             even able to BE determined. Therefore, if this condition is ever met, we set false and stop checking our
-              other conditions.
+            a 3x3 board. This is because there are a certain amount of turns that MUST be played before a winner is
+            even able to BE determined. Therefore, if this condition is ever met, we set false and stop checking our
+            other conditions.
 
             From this point, the only checks we now need to make are whether one of the players have won. The main
             reason I have is structured as a second check on the next player and now a simple OR checking BOTH
@@ -356,11 +357,43 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
                     gameEnded = isAWinner(Player.O);
                 }
             }
+            //            } else {
+            //                gameEnded = someoneWon(Player.X) || someoneWon(Player.O);
+            //            }
         }
 
         assert movesArrayIsWellFormed();
         return gameEnded;
     }
+    /*
+    static int[][] winningSequences = new int[][]{
+            new int[]{0,1,2}, new int[]{3,4,5}, new int[]{6,7,8},
+            new int[]{0,3,6}, new int[]{1,4,7}, new int[]{2,5,8},
+            new int[]{0,4,8}, new int[]{2,4,6}
+    };
+
+    private List<Integer> x() {
+        return IntStream.range(0, movesArray.length).filter(i -> i % 2 == 0).mapToObj(i -> movesArray[i])
+                .collect(Collectors.toList());
+    }
+    private List<Integer> o() {
+        return IntStream.range(0, movesArray.length).filter(i -> i % 2 != 0).mapToObj(i -> movesArray[i])
+                .collect(Collectors.toList());
+    }
+
+    private boolean someoneWon(Player player) {
+        List<Integer> blacklist = new ArrayList<>();
+        List<Integer> playerList = player == Player.X ? x() : o();
+        int index = 0;
+        boolean meetsWinCondition = false;
+        while (index < winningSequences.length && !meetsWinCondition) {
+            int[] winningSequence = winningSequences[index];
+            meetsWinCondition = playerList.containsAll(Arrays.asList(winningSequence));
+            index ++;
+        }
+        return true;
+    }
+    */
 
     /*	Precondition(s):
                             isGameOver()
@@ -417,10 +450,10 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             Space:
 
             Firstly, we will start with the assumption that there is NO WINNER and try to 'prove me otherwise'. In
-            this case, we are only needing to check wether X or O are the winners, but determining the winners is
+            this case, we are only needing to check whether X or O are the winners, but determining the winners is
             where all the fun stuff happens. Put simply here, we want to check for the winning cases for the player
-            one at a time, because of course, finding a winner is our 'escape condition' if you will. Go to isWinner
-            () to see how exactly we do that
+            one at a time, because of course, finding a winner is our 'escape condition' if you will. Go to isWinner()
+            to see how exactly we do that
     */
     public Player getWinner() {
         assert movesArrayIsWellFormed();
@@ -443,7 +476,6 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
         NO-MOVE because they can mess up our verifier. In the case of player X, we only want the even indices of
         movesArray while player O will want only the odd indices.
     */
-    private static List<Integer> player_Turns;
 
     private List<Integer> xTurns() {
         return IntStream.range(0, movesArray.length).filter(i -> i % 2 == 0).mapToObj(i -> movesArray[i]).filter(
@@ -456,19 +488,19 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     }
 
     /*
-    Step through all four win conditions sets
-    Wins by rows, columns or the anti-diagonal all have the 'same' win conditions such that their turns have
-    been normalised in the respective ways.
+        Step through all four win conditions sets
+        Wins by rows, columns or the anti-diagonal all have the 'same' win conditions such that their turns have
+        been normalised in the respective ways.
     */
-    private Boolean isAWinner(Player player) {
-        player_Turns = player.equals(Player.X) ? xTurns() : oTurns();
-        boolean winConditionMet = rowsWinCondition();
+    private boolean isAWinner(Player player) {
+        List<Integer> player_Turns = player.equals(Player.X) ? xTurns() : oTurns();
+        boolean winConditionMet = rowsWinCondition(player_Turns);
         if (!winConditionMet) {
-            winConditionMet = colsWinCondition();
+            winConditionMet = colsWinCondition(player_Turns);
             if (!winConditionMet) {
-                winConditionMet = diagWinCondition();
+                winConditionMet = diagWinCondition(player_Turns);
                 if (!winConditionMet) {
-                    winConditionMet = antiWinCondition();
+                    winConditionMet = antiWinCondition(player_Turns);
                 }
             }
         }
@@ -480,12 +512,19 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     Row Normalisation
     i 	=>	i / ROW_COUNT
     For every element of the list, we will divide it by ROW_COUNT
-    Standard 3x3		Normalised 3x3
-    0|1|2		==>		0|0|0
-    3|4|5		==>		1|1|1
-    6|7|8		==>		2|2|2
+    If we wanted to think about our tic tac toe board as an (x,y) => (row, column) grid system, it can also be
+    thought of dropping the row information
+    Gridded 3x3                         Normalised 3x3
+    (0,0)|(1,0)|(2,0)		    ==>		0|0|0
+    (0,1)|(1,1)|(2,1)	    	==>     1|1|1
+    (0,2)|(1,2)|(2,2)		    ==>		2|2|2
 
-    Original 4x4			Normalised 4x4
+    movesArray 3x3         	Normalised 3x3
+    0|1|2		    ==>		0|0|0
+    3|4|5		    ==>		1|1|1
+    6|7|8		    ==>		2|2|2
+
+    movesArray 4x4			Normalised 4x4
      0| 1| 2| 3		==>		0|0|0|0
      4| 5| 6| 7		==>		1|1|1|1
      8| 9|10|11		==>		2|2|2|2
@@ -498,12 +537,12 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
          ..|  ..|  ..|  ..|  ..		==>		  ..|  ..|  ..|  ..|  ..
     (n-1)*n|  ..|  ..|  ..|n*n-1	==>		 n-1| n-1| n-1|  ..| n-1
     */
-    private List<Integer> normaliseForRows() {
+    private List<Integer> normaliseForRows(List<Integer> player_Turns) {
         return player_Turns.stream().map(i -> i / ROW_COUNT).collect(Collectors.toList());
     }
 
-    private boolean rowsWinCondition() {
-        List<Integer> rowsTransform = normaliseForRows();
+    private boolean rowsWinCondition(List<Integer> player_Turns) {
+        List<Integer> rowsTransform = normaliseForRows(player_Turns);
         boolean isWinner = threeOfAKind(rowsTransform);
 
         return isWinner;
@@ -513,12 +552,19 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     Column Normalisation
     i 	=>	i % ROW_COUNT
     For every element of the list, we will mod it by ROW_COUNT
-    Standard 3x3		Normalised 3x3
-    0|1|2		==>		0|1|2
-    3|4|5		==>		0|1|2
-    6|7|8		==>		0|1|2
+    If we wanted to think about our tic tac toe board as an (x,y) => (row, column) grid system, it can also be
+    thought of dropping the column information
+    Gridded 3x3                         Normalised 3x3
+    (0,0)|(1,0)|(2,0)		    ==>		0|1|2
+    (0,1)|(1,1)|(2,1)	    	==>     0|1|2
+    (0,2)|(1,2)|(2,2)		    ==>		0|1|2
 
-    Original 4x4			Normalised 4x4
+    movesArray 3x3          Normalised 3x3
+    0|1|2		    ==>		0|1|2
+    3|4|5	    	==>     0|1|2
+    6|7|8		    ==>		0|1|2
+
+    movesArray 4x4			Normalised 4x4
      0| 1| 2| 3		==>		0|1|2|3
      4| 5| 6| 7		==>		0|1|2|3
      8| 9|10|11		==>		0|1|2|3
@@ -532,12 +578,12 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
          ..|  ..|  ..|  ..|  ..		==>		 ..|  ..|  ..|  ..|  ..
     (n-1)*n|  ..|  ..|  ..|n*n-1	==>		  0|   1|   2|  ..| n-1
     */
-    private List<Integer> normaliseForCols() {
+    private List<Integer> normaliseForCols(List<Integer> player_Turns) {
         return player_Turns.stream().map(i -> i % COLUMN_COUNT).collect(Collectors.toList());
     }
 
-    private boolean colsWinCondition() {
-        List<Integer> colsTransform = normaliseForCols();
+    private boolean colsWinCondition(List<Integer> player_Turns) {
+        List<Integer> colsTransform = normaliseForCols(player_Turns);
         boolean isWinner = threeOfAKind(colsTransform);
 
         return isWinner;
@@ -547,12 +593,12 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     Anti-Diagonal Normalisation
     i 	=>	(i / ROW_COUNT) + (i % ROW_COUNT)
     For every element of the list, we take the sum of our row and column normalisation technique
-    Standard 3x3		Normalised 3x3
-    0|1|2		==>		0|1|2
-    3|4|5		==>		1|2|3
-    6|7|8		==>		2|3|4
+    movesArray 3x3	    	Normalised 3x3
+    0|1|2		    ==>		0|1|2
+    3|4|5		    ==>		1|2|3
+    6|7|8		    ==>		2|3|4
 
-    Original 4x4			Normalised 4x4
+    movesArray 4x4			Normalised 4x4
      0| 1| 2| 3		==>		0|1|2|3
      4| 5| 6| 7		==>		1|2|3|4
      8| 9|10|11		==>		2|3|4|5
@@ -565,20 +611,20 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
          ..|  ..|  ..|  ..|  ..		==>		 ..| n-1|  ..|  ..|  ..
     (n-1)*n|  ..|  ..|  ..|n*n-1	==>		n-1|  ..|  ..|  ..|  ..
     */
-    private List<Integer> normaliseForAnti() {
+    private List<Integer> normaliseForAnti(List<Integer> player_Turns) {
         return player_Turns.stream().map(i -> (i % ROW_COUNT) + (i / COLUMN_COUNT)).collect(Collectors.toList());
     }
 
-    private boolean antiWinCondition() {
-        List<Integer> antiTransform = normaliseForAnti();
+    private boolean antiWinCondition(List<Integer> player_Turns) {
+        List<Integer> antiTransform = normaliseForAnti(player_Turns);
         boolean isWinner = threeOfAKind(antiTransform);
 
         return isWinner;
     }
 
     /*
-    With our normalisation, now only need to check if there exists an N of a kind of, such
-    that N is the length of any square board of any particular element
+        With our normalisation, now only need to check if there exists an N of a kind of, such
+        that N is the length of any square board of any particular element
     */
     private boolean threeOfAKind(List<Integer> normalisedList) {
         Map<Object, Long> occurrences = normalisedList.stream().collect(
@@ -589,12 +635,13 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     }
 
     /*
-    As it turns out, there's a forumalic way we can calculate what integer will be the diagonal given their row.
-    Because of that, all we have to do is to check that we have N number of those calculated integers. Of course what
-     that could have meant is we make a static table with lists based on the size of the board, but with this will
-     cover ANY NxN board whereas making a static table will be bounded by how many rows we WANT to make.
+        As it turns out, there's a forumalic way we can calculate what integer will be the diagonal given their row.
+        Because of that, all we have to do is to check that we have N number of those calculated integers. Of course
+        what
+        that could have meant is we make a static table with lists based on the size of the board, but with this will
+        cover ANY NxN board whereas making a static table will be bounded by how many rows we WANT to make.
     */
-    private boolean diagWinCondition() {
+    private boolean diagWinCondition(List<Integer> player_Turns) {
         int row = 0;
         int count = 0;
         while (row < ROW_COUNT) {
@@ -628,7 +675,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
                 int[] getRowColumn = indexToRowColumn(i);
                 sb.append(getMark(getRowColumn[0], getRowColumn[1]));
             } else {
-                sb.append(' ');
+                sb.append("  ");
             }
             if (i % COLUMN_COUNT == 0 || i % COLUMN_COUNT == 1) {
                 sb.append('|');

@@ -24,7 +24,15 @@ public class WinnerDetectorImpl_Ng implements Detector {
                 String.format("tictactoeSequence is not viable!: tictactoeSequence = %s", sequence);
 
         TicTacToeGame game = new TicTacToeGameImpl_Ng(sequence);
-        desiredWinner = game.getWinner();
-        return desiredWinner != NO_WINNER;
+        boolean declarable = false;
+        Player winner = null;
+        try {
+            winner = game.getWinner();
+            declarable = winner == desiredWinner;
+
+        } catch (AssertionError ae) {
+        }
+
+        return declarable;
     }
 }

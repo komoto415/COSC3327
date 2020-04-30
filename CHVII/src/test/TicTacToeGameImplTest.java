@@ -590,6 +590,25 @@ public class TicTacToeGameImplTest {
     }
 
     @Test
+    public void test() {
+        /*
+        X1|O1|X2
+        O4|  |O2
+        x4|O3|X3
+        */
+        TicTacToeGame board = getTicTacToeGame();
+        board.setMark(0, 0);
+        board.setMark(0, 1);
+        board.setMark(0, 2);
+        board.setMark(1, 2);
+        board.setMark(2, 2);
+        board.setMark(2, 1);
+        board.setMark(2, 0);
+        board.setMark(1, 0);
+        assertFalse(board.isGameOver());
+    }
+
+    @Test
     public void test_board__1_0() {
         testName = Thread.currentThread().getStackTrace()[1].getMethodName();
         bookend(testName);
