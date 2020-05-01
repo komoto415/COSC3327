@@ -137,7 +137,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     };
 
     public Mark getMark(int row, int column) {
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
 
         assert 0 <= row && row < ROW_COUNT : "row is out of bounds! <" + row + ">";
         assert 0 <= column && column < COLUMN_COUNT : "column is out of bounds! <" + column + ">";
@@ -155,7 +155,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             }
         }
 
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
         return retMark;
     }
 
@@ -196,7 +196,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             movesArray.
     */
     public void setMark(int row, int column) {
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
 
         assert 0 <= row && row < ROW_COUNT : "row is out of bounds! <" + row + ">";
         assert 0 <= column && column < COLUMN_COUNT : "column is out of bounds! <" + column + ">";
@@ -207,7 +207,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
         int marksPlayed = marksPlayedSet().size();
         movesArray[marksPlayed] = fixedCoor;
 
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
     }
 
     private int RowColumnToIndex(int row, int column) {
@@ -263,7 +263,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             only other possible option at this point is for it to be O
     */
     public Player getTurn() {
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
 
         Player turn = NO_TURN_AVAILABLE;
         if (!isGameOver()) {
@@ -271,7 +271,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             turn = marksPlayed.size() % 2 == 0 ? Player.X : Player.O;
         }
 
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
         return turn;
     }
 
@@ -344,7 +344,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     private static final int MINIMUM_MARKS_PLAYED_TO_HAVE_A_WINNER = ROW_COUNT + COLUMN_COUNT - 1;
 
     public boolean isGameOver() {
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
 
         int marksPlayed = marksPlayedSet().size();
         boolean gameEnded = marksPlayed == ROW_COUNT * COLUMN_COUNT;
@@ -357,43 +357,11 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
                     gameEnded = isAWinner(Player.O);
                 }
             }
-            //            } else {
-            //                gameEnded = someoneWon(Player.X) || someoneWon(Player.O);
-            //            }
         }
 
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
         return gameEnded;
     }
-    /*
-    static int[][] winningSequences = new int[][]{
-            new int[]{0,1,2}, new int[]{3,4,5}, new int[]{6,7,8},
-            new int[]{0,3,6}, new int[]{1,4,7}, new int[]{2,5,8},
-            new int[]{0,4,8}, new int[]{2,4,6}
-    };
-
-    private List<Integer> x() {
-        return IntStream.range(0, movesArray.length).filter(i -> i % 2 == 0).mapToObj(i -> movesArray[i])
-                .collect(Collectors.toList());
-    }
-    private List<Integer> o() {
-        return IntStream.range(0, movesArray.length).filter(i -> i % 2 != 0).mapToObj(i -> movesArray[i])
-                .collect(Collectors.toList());
-    }
-
-    private boolean someoneWon(Player player) {
-        List<Integer> blacklist = new ArrayList<>();
-        List<Integer> playerList = player == Player.X ? x() : o();
-        int index = 0;
-        boolean meetsWinCondition = false;
-        while (index < winningSequences.length && !meetsWinCondition) {
-            int[] winningSequence = winningSequences[index];
-            meetsWinCondition = playerList.containsAll(Arrays.asList(winningSequence));
-            index ++;
-        }
-        return true;
-    }
-    */
 
     /*	Precondition(s):
                             isGameOver()
@@ -456,7 +424,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             to see how exactly we do that
     */
     public Player getWinner() {
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
 
         assert isGameOver() : "There can't be a winner if that game isn't over!";
 
@@ -467,7 +435,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             winner = Player.O;
         }
 
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
         return winner;
     }
 
@@ -542,9 +510,11 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     }
 
     private boolean rowsWinCondition(List<Integer> player_Turns) {
-        List<Integer> rowsTransform = normaliseForRows(player_Turns);
-        boolean isWinner = threeOfAKind(rowsTransform);
-
+        //        List<Integer> rowsTransform = normaliseForRows(player_Turns);
+        //        boolean isWinner = threeOfAKind(rowsTransform);
+        boolean isWinner = (player_Turns.contains(0) && player_Turns.contains(1) && player_Turns.contains(2)) ||
+                           (player_Turns.contains(3) && player_Turns.contains(4) && player_Turns.contains(5)) ||
+                           (player_Turns.contains(6) && player_Turns.contains(7) && player_Turns.contains(8));
         return isWinner;
     }
 
@@ -583,9 +553,11 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     }
 
     private boolean colsWinCondition(List<Integer> player_Turns) {
-        List<Integer> colsTransform = normaliseForCols(player_Turns);
-        boolean isWinner = threeOfAKind(colsTransform);
-
+        //        List<Integer> colsTransform = normaliseForCols(player_Turns);
+        //        boolean isWinner = threeOfAKind(colsTransform);
+        boolean isWinner = (player_Turns.contains(0) && player_Turns.contains(3) && player_Turns.contains(6)) ||
+                           (player_Turns.contains(1) && player_Turns.contains(4) && player_Turns.contains(7)) ||
+                           (player_Turns.contains(2) && player_Turns.contains(5) && player_Turns.contains(8));
         return isWinner;
     }
 
@@ -616,9 +588,9 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
     }
 
     private boolean antiWinCondition(List<Integer> player_Turns) {
-        List<Integer> antiTransform = normaliseForAnti(player_Turns);
-        boolean isWinner = threeOfAKind(antiTransform);
-
+        //        List<Integer> antiTransform = normaliseForAnti(player_Turns);
+        //        boolean isWinner = threeOfAKind(antiTransform);
+        boolean isWinner = (player_Turns.contains(2) && player_Turns.contains(4) && player_Turns.contains(6));
         return isWinner;
     }
 
@@ -642,15 +614,17 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
         cover ANY NxN board whereas making a static table will be bounded by how many rows we WANT to make.
     */
     private boolean diagWinCondition(List<Integer> player_Turns) {
-        int row = 0;
-        int count = 0;
-        while (row < ROW_COUNT) {
-            if (player_Turns.contains(getDiagonalIndexOfRow(row))) {
-                count++;
-            }
-            row++;
-        }
-        boolean isWinner = count == ROW_COUNT;
+        //        int row = 0;
+        //        int count = 0;
+        //        while (row < ROW_COUNT) {
+        //            if (player_Turns.contains(getDiagonalIndexOfRow(row))) {
+        //                count++;
+        //            }
+        //            row++;
+        //        }
+        //        boolean isWinner = count == ROW_COUNT;
+
+        boolean isWinner = player_Turns.contains(0) && player_Turns.contains(4) && player_Turns.contains(8);
 
         return isWinner;
     }
@@ -685,7 +659,7 @@ public class TicTacToeGameImpl_Ng implements TicTacToeGame {
             }
         }
 
-        assert movesArrayIsWellFormed();
+        // assert MovesArrayIsWellFormed();
         return sb.toString();
     }
 }
